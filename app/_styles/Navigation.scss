@@ -1,0 +1,33 @@
+@use 'base' as base;
+
+$top-bar-height: 20%;
+$nav-div-width: 15%;
+$nav-div-padding: 15pt;
+$nav-div-selected-color: rgb(89, 89, 177);
+
+@mixin default-border {
+    border: 2pt solid base.$border-color;
+}
+
+.top-bar {
+    @include default-border();
+    height: $top-bar-height;
+    display: flex;
+    .nav-div {
+        display: flex;
+        width: $nav-div-width;
+        padding: $nav-div-padding;
+        align-items: center; /* Center vertically */
+        justify-content: center;
+        text-align: center;
+        color: black;
+        @include default-border();
+        &:hover {
+            background-color: base.$border-color;
+        }
+        &-selected {
+            @extend .nav-div;
+            background-color: $nav-div-selected-color;
+        }
+    }
+}
