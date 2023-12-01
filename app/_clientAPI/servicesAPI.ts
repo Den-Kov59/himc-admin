@@ -29,7 +29,7 @@ export const getServiceById =  async (id: string) =>{
 
 export const postCreateService = async (name: string, cost: number)=>{
     try{
-        const respone = await axios.post('http://localhost:8000/himservices/create', {name, cost})
+        const respone = await axios.post('http://localhost:8000/himservices/new', {name, cost})
         return respone.data
     }catch (e){
         console.log(e)

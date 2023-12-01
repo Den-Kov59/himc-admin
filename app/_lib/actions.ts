@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 import { signIn } from "../auth";
 import { z } from "zod";
-import { postCreateService } from "../_clientAPI/servicesAPI";
+import { editServiceById, postCreateService } from "../_clientAPI/servicesAPI";
 import { revalidatePath } from "next/cache";
 
 const serviceSchema = z.object({
@@ -20,14 +20,34 @@ export async function createService(formData: FormData) {
     })
     try{
         const response = await postCreateService(name, cost)
-        if(response.data){
-            revalidatePath('/dashboard/services')
+        if(!response.success){
+            throw new Error('API error')
         }
-        throw new Error('API error')
+        
     } catch (error){
         console.log(error)
         throw error
     }
+    revalidatePath('/dashboard/services')
+    redirect('/dashboard/services')
+}
+
+export async function updateService(id: string, formData: FormData) {
+    const {cost} = CreateService.parse({
+        name: formData.get('name'),
+        cost: formData.get('cost')
+    })
+    try{
+        const response = await editServiceById(id, cost)
+        if(!response.success){
+            throw new Error('API error')
+        }
+    } catch (error){
+        console.log(error)
+        throw error
+    }
+    revalidatePath('/dashboard/services')
+    redirect('/dashboard/services')
 }
 
 export async function authenticate(prevState: string | undefined,
