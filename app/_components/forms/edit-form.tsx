@@ -1,6 +1,7 @@
 import { updateService } from "@/app/_lib/actions";
 import { IService } from "@/app/_lib/dataTypes";
 
+
 export default function EditForm({ service }: {service: IService}){
     const updateServiceWithId = updateService.bind(null, service._id);
     return(

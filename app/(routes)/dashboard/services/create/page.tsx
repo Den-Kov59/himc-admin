@@ -1,4 +1,4 @@
-import CreateForm from "@/app/_components/forms/create-form";
+import CreateForm from "@/app/_components/forms/create-forms/service-create-form";
 
 export default async function CreatePage() {
     return (

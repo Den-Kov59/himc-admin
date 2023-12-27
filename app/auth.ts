@@ -35,7 +35,7 @@ export const { auth, signIn, signOut } = NextAuth({
                 return null
             }
             console.log(user.data)
-            return user.data
+            return {user: user.data, token: user.token}
         }
 
         console.log('invalid credentials')

@@ -13,6 +13,17 @@ const serviceSchema = z.object({
 
 const CreateService = serviceSchema.omit({_id: true})
 
+const placeSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    address: z.string(),
+    description: z.string(),
+    himservices: z.array(z.boolean()),
+    images: z.string()
+})
+
+const CreatePlace = placeSchema.omit({_id: true})
+
 export async function createService(formData: FormData) {
     const {name, cost} = CreateService.parse({
         name: formData.get('name'),
@@ -20,6 +31,37 @@ export async function createService(formData: FormData) {
     })
     try{
         const response = await postCreateService(name, cost)
+        if(!response.success){
+            throw new Error('API error')
+        }
+        
+    } catch (error){
+        console.log(error)
+        throw error
+    }
+    revalidatePath('/dashboard/services')
+    redirect('/dashboard/services')
+}
+
+export async function createPlace(formData: FormData) {
+    const {name,
+        address,
+        description,
+        himservices,
+        images} = CreatePlace.parse({
+        name: formData.get('name'),
+        address: formData.get('address'),
+        description: formData.get('description'),
+        himservices: formData.get('himservices'),
+        images: formData.get('images')
+    })
+    try{
+        const response = await postCreatePlace(
+            name,
+            address,
+            description,
+            himservices,
+            images)
         if(!response.success){
             throw new Error('API error')
         }

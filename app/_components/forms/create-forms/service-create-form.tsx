@@ -45,7 +45,7 @@ const placeForm = {
     ]
 }
 
-export default function CreateForm(){
+export default function ServiceCreateForm(){
     return(
         <form action={createService}>
             <label>Service Name</label>
